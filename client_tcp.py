@@ -1,7 +1,7 @@
 import socket
 
-                          #IPV4              #Protocol TCP
+                          #IPV4              #Protocolo TCP
 c = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
 c.connect(("google.com", 80))
-c.send(b"Ola, mundo")
+c.send(b"GET / HTTP/3\nHost: www.google.com") # header bruto requisição
 c.recv(1024)
