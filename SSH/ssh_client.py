@@ -1,8 +1,11 @@
 import paramiko
+import subprocess
 
-host = '127.0.0.1'
-user = 'kali'
-passwd = 'kali'
+
+host = input('Enter host: ')
+user = input('Enter username: ')
+passwd = input('Enter password: ')
 
 c = paramiko.SSHClient()
-c.connect(host, username=user, password=passwd)
+c.set_missing_host_key_policy(paramiko.AutoAddPolicy()) #Conecta em conexões SSH sem verificar a chave do host
+c.connect(host, username=user, password=passwd) #Passa os parâmetros para a conexão SSH
