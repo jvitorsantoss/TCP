@@ -1,5 +1,5 @@
 import paramiko
-import threading   
+
 
 
 host = input('Enter the host you wanto connect: ')
@@ -36,9 +36,6 @@ def exe_terminal(host=host):
             if error:
                 print(f"Erro: {error.strip()}")
 
-            # Sai quando o comando terminou e não há mais nada para ler
-            if stdout.channel.exit_status_ready() and not output and not error:
-                break
         c.close()
     elif choose == "1":
         print("You can now execute commands on the remote server. Type 'exit' to disconnect.\n")  
