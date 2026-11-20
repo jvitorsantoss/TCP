@@ -2,7 +2,7 @@ import paramiko
 
 
 
-host = input('Enter the host you wanto connect: ')
+host = input('Enter the host you want to connect: ')
 user = input('Enter the username: ')
 passwd = input('Enter thepassword: ')
 
