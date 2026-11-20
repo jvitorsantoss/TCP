@@ -14,7 +14,7 @@ try:
         client_socket.send(input("Message: \n").encode("utf-8")) # envia dados para o cliente TCP
         if data == "exit":
             print("Closing connection...")
-            client_socket.close() # fecha conexão TCP   
+            client_socket.close() # fecha conexão TCP 
     
 except Exception as e:
     print(f"Error: {e}")
